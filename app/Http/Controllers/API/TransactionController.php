@@ -50,6 +50,6 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $transaction->update($request->all());
 
-        return ResponseFormatter::success($transaction, 'Transaksi berhasil di update');
+        return ResponseFormatter::success($transaction, 'Transaksi berhasil diupdate');
     }
 }
