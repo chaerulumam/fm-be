@@ -48,4 +48,19 @@ class MidtransController extends Controller
 
         $transaction->save();
     }
+
+    public function success()
+    {
+        return view('midtrans.success');
+    }
+
+    public function error()
+    {
+        return view('midtrans.error');
+    }
+
+    public function unfinish()
+    {
+        return view('midtrans.unfinish');
+    }
 }
