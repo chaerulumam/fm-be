@@ -55,7 +55,7 @@ class UserController extends Controller
         ]);
 
         $data = $request->all();
-        $data['profile_photo_path'] = $request->file('profile_photo_path')->store('assets/user', 'public');
+        $data['picturePath'] = $request->file('picturePath')->store('assets/user', 'public');
         $data['password'] = Hash::make($request->password);
         $data['current_team_id'] = 1;
 
@@ -99,8 +99,8 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        if ($request->file('profile_photo_path')) {
-            $data['profile_picture_path'] = $request->file('profile_photo_path')->store('assets/user', 'public');
+        if ($request->file('picturePath')) {
+            $data['picturePath'] = $request->file('picturePath')->store('assets/user', 'public');
         }
 
         $data['password'] = Hash::make($request->password);

@@ -122,7 +122,7 @@ class UserController extends Controller
             $file = $request->file->store('assets/user', 'public');
 
             $user = Auth::user();
-            $user->profile_photo_path = $file;
+            $user->picturePath = $file;
             $user->update();
 
             return ResponseFormatter::success([$file, 'Success upload file']);
