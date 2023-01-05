@@ -10,6 +10,7 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
 class TransactionController extends Controller
 {
@@ -58,13 +59,25 @@ class TransactionController extends Controller
 
     public function checkout(Request $request)
     {
-        $request->validate([
+        // $request->validate([
+        //     'food_id' => 'required|exists:food,id',
+        //     'user_id' => 'required|exists:users,id',
+        //     'quantity' => 'required',
+        //     'total' => 'required',
+        //     'status' => 'required'
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'food_id' => 'required|exists:food,id',
             'user_id' => 'required|exists:users,id',
             'quantity' => 'required',
             'total' => 'required',
             'status' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
 
         $transaction = Transaction::create([
             'food_id' => $request->food_id,
@@ -97,7 +110,7 @@ class TransactionController extends Controller
         ];
 
         try {
-            $paymentUrl = Snap::createTransaction($midtrans)->redirect_url();
+            $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
 
             $transaction->payment_url = $paymentUrl;
             $transaction->save();
